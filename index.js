@@ -163,7 +163,7 @@ function additionalEmp() {
                 value: manager[i].id 
             })
         }
-        inquirer.prompt(addEmployeeQuestion)
+        inquirer.prompt(addEmpQ)
         .then(response => {
           const {newEmployeeFirstName, newEmployeeLastName, newEmployeeRole, newEmployeeManagerRole} = response;
           var value = [newEmployeeFirstName, newEmployeeLastName, newEmployeeRole, newEmployeeManagerRole];
