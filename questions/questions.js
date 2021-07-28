@@ -58,3 +58,24 @@ const addEmpQ = [
       name: 'empManager',
     }
 ]
+
+const updateEmpQ = [
+    {
+      type:'list',
+      message: "Enter the name of the employee whose role you'd like to update.",
+      name: 'empName',
+      choices: []
+    },
+    {
+      type: 'list',
+      message: "Enter the new role you'd like to assign",
+      name: 'newRole',
+      choices: []
+    }
+]
+  
+module.exports.defaultQ= defaultQ;
+module.exports.addDeptQ = addDeptQ;
+module.exports.addRoleQ = addRoleQ;
+module.exports.addEmpQ = addEmpQ;
+module.exports.updateEmpQ = updateEmpQ;
