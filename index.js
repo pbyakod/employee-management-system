@@ -195,7 +195,7 @@ function updateEmpRole() {
         var roles2 = response2[0];
         var index2 = 0;
         while(index2 < roles2.length){
-            updateEmployeeRoleQuestion[1].choices.push({
+            updateEmpQ[1].choices.push({
                 'name': roles2[i].title, 
                 value: roles2[i].id
             })
@@ -204,7 +204,7 @@ function updateEmpRole() {
         inquirer.prompt(updateEmpQ)
         .then(answers => {
           console.log('Answers:', answers)
-          connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.updateEmployeetoNewDepartment, answers.employeeName])
+          connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.newRole, answers.empName])
           .then(response3 => {
             console.log(`${response3} has been updated to the database!`)
             initialize
