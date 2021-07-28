@@ -6,7 +6,7 @@ const connect = mysql2.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'trackerDB',
-    password: 'kitput34'
+    password: ''
 });
 
 function initialize() {
