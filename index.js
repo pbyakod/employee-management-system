@@ -3,7 +3,7 @@ const mysql2 = require('mysql2');
 const consTable = require('console.table');
 const {defaultQ, addDeptQ, addRoleQ, addEmpQ, updateEmpQ} = require('./questions/questions');
 
-const connect = mysql.createConnection({
+const connect = mysql2.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'trackerDB',
@@ -107,11 +107,11 @@ function additionalDept() {
 
 function additionalRole() {
     connection.promise().query('SELECT * FROM department')
-    .then(role => {
-      var rolesTbl = role[0];
+    .then(dept => {
+      var deptTbl = dept[0];
       var index = 0;
-      while(index < rolesTbl.length) {
-          addRoleQ[2].choices.push(rolesTbl[i].name);
+      while(index < deptTbl.length) {
+          addRoleQ[2].choices.push(deptTbl[i].name);
           index += 1;
       }
       inquirer.prompt(addRoleQ)
@@ -136,7 +136,83 @@ function additionalRole() {
         console.log('ERROR!', error)
       })
     })
-    .catch(err => {
+    .catch(error => {
       console.log('ERROR!', error)
+    })
+}
+
+function additionalEmp() {
+    connection.promise().query('SELECT * FROM role')
+    .then(role => {
+      var roleTbl = role[0]
+      var index = 0;
+      while(index < roleTbl.length) {
+        addEmpQ[2].choices.push({
+            name: roleTbl[i].title,
+            value: roleTbl[i].id
+        });
+        index += 1;
+      }
+      connection.promise().query('SELECT * FROM employee WHERE manager_id IS NULL')
+      .then(role2 => {
+        var managers = role2[0];
+        var index2 = 0;
+        while(index2 < managers.length) {
+            addEmpQ[3].choices.push({
+                'name': manager[i].first_name + ' ' + manager[i].last_name, 
+                value: manager[i].id 
+            })
+        }
+        inquirer.prompt(addEmployeeQuestion)
+        .then(response => {
+          const {newEmployeeFirstName, newEmployeeLastName, newEmployeeRole, newEmployeeManagerRole} = response;
+          var value = [newEmployeeFirstName, newEmployeeLastName, newEmployeeRole, newEmployeeManagerRole];
+          var query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`
+          connection.promise().query(query, value)
+          .then(response2 => {
+            console.log(`${response2} has been added to the database!`)
+            initialize();
+          })
+        })
+      })
+    })
+}
+
+function updateEmpRole() {
+    connection.promise().query('SELECT * FROM employee')
+    .then(response => {
+      var employees = response[0];
+      var index = 0;
+      while(index < employees.length) {
+        updateEmpQ[0].choices.push({
+            'name': employees[i].first_name + ' ' + employees[i].last_name, 
+            value: employees[i].id 
+        })
+        index += 1;
+      }
+      connection.promise().query('SELECT * FROM role')
+      .then(response2 => {
+        var roles2 = response2[0];
+        var index2 = 0;
+        while(index2 < roles2.length){
+            updateEmployeeRoleQuestion[1].choices.push({
+                'name': roles2[i].title, 
+                value: roles2[i].id
+            })
+            index += 1;
+        }
+        inquirer.prompt(updateEmpQ)
+        .then(answers => {
+          console.log('Answers:', answers)
+          connection.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.updateEmployeetoNewDepartment, answers.employeeName])
+          .then(response3 => {
+            console.log(`${response3} has been updated to the database!`)
+            initialize
+          })
+          .catch(error => {
+            console.log('ERROR!', error)
+          })
+        })
+      })
     })
 }
