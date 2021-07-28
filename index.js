@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql2 = require('mysql2');
+const consTable = require('console.table');
 const {defaultQ, addDeptQ, addRoleQ, addEmpQ, updateEmpQ} = require('./questions/questions');
 
 const connect = mysql.createConnection({
@@ -51,3 +52,28 @@ function initialize() {
 
 initialize();
 
+function displayDept() {
+    connect.promise().query('SELECT * FROM DEPARTMENT')
+        .then(dept => {
+            console.log('\nDISPLAYING ALL DEPARTMENTS:');
+            console.table(dept[0]);
+            initialize();
+        })
+        .catch(error => {
+            console.log('ERROR!', error);
+        })
+}
+
+
+function displayRoles() {
+    var queryStr = `SELECT role.id, role.title, department.name AS department, role.salary FROM role INNER JOIN department ON role.department_id = department.id ORDER BY role.id;`
+    connect.promise().query(queryStr)
+        .then(role => {
+            console.log('\nDISPLAYING ALL ROLES:');
+            console.log(role[0]);
+            initialize();
+        })
+        .catch(error => {
+            console.log('ERROR!', error);
+        })
+}
