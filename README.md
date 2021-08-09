@@ -11,7 +11,7 @@ This node-based application allows managers and company planners to view, edit, 
 Below are the command line steps to install the repository and its packages onto your system.
 
 ```
-git clone https://github.com/pbyakod/tracking-employees.git
+git clone https://github.com/pbyakod/employee-management-system.git
 npm install
 ```
 
