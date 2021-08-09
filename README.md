@@ -1,4 +1,4 @@
-# Tracking Your Employees
+# Employee Management System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -36,4 +36,4 @@ to begin the program. Enjoy!
 
 ## Walkthrough Video Link
 
-<a href="https://drive.google.com/file/d/17SxwG5DOzD7nHcJwAQgv8AifFS-3JR-S/view?usp=sharing">Click Me!</a>
+<a href="https://drive.google.com/file/d/17SxwG5DOzD7nHcJwAQgv8AifFS-3JR-S/view?usp=sharing">Walkthrough Video</a>
